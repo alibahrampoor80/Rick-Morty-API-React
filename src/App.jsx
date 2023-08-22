@@ -2,29 +2,28 @@ import './App.css'
 import Navbar from "./components/Navbar.jsx";
 import CharacterList from "./components/CharacterList.jsx";
 import CharacterDetail from "./components/CharacterDetail.jsx";
-import {allCharacters} from "./data/data.js";
-import {UseGetAllCharacters} from "./hooks/useRickAndMorty.js";
+
+import {UseGetAllCharacters, UseGetAllEpisode} from "./hooks/useRickAndMorty.js";
 import LoadingSpinner from "./components/LoadingSpinner.jsx";
 
 function App() {
-    const {data, isLoading} = UseGetAllCharacters()
-    console.log(data)
-    const allCharacters = data || {}
+    const {data: dataAllCharacters, isLoading: isLoadingAllCharacters} = UseGetAllCharacters()
+    const {data: dataAllEpisode, isLoading: isLoadingAllEpisode} = UseGetAllEpisode()
+
+    const allCharacters = dataAllCharacters || {}
+    const allEpisode = dataAllEpisode || {}
+
     return (
 
         <div className={'app'}>
 
-            <Navbar/>
-            <h1 className="text-3xl font-bold underline text-red-800">
-                Hello world!
-            </h1>
+            <Navbar charactersLength={allCharacters?.results?.length}/>
+
             <div className="main">
 
-                {
-                    isLoading ? <LoadingSpinner/> : <CharacterList characters={allCharacters.results}/>
-                }
+                <CharacterList characters={allCharacters.results} isLoading={isLoadingAllCharacters}/>
 
-                <CharacterDetail/>
+                <CharacterDetail allEpisode={allEpisode.results} isLoading={isLoadingAllEpisode}/>
             </div>
         </div>
 
