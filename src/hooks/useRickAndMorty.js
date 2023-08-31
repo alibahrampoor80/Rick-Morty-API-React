@@ -1,10 +1,10 @@
 import {useQuery} from "react-query";
 import {getCharacters, getEpisode, getLocation} from "../services/rickAndMortyServices.js";
 
-export const UseGetAllCharacters = () => {
+export const UseGetAllCharacters = (id) => {
     return useQuery({
         queryKey: ['get-characters'],
-        queryFn: getCharacters,
+        queryFn: () => getCharacters(id),
         retry: false,
         refetchOnWindowFocus: true
     })

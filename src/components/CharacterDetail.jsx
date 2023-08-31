@@ -4,7 +4,7 @@ import {FcBusinesswoman, FcManager} from "react-icons/fc";
 import {ArrowUpCircleIcon} from "@heroicons/react/24/outline";
 import LoadingSpinner from "./LoadingSpinner.jsx";
 
-const CharacterDetail = ({allEpisode, isLoading}) => {
+const CharacterDetail = ({allEpisode}) => {
     return (
         <div style={{flex: "1"}}>
             <div className="character-detail">
@@ -44,15 +44,14 @@ const CharacterDetail = ({allEpisode, isLoading}) => {
                 </div>
                 <ul>
                     {
-                        isLoading ? <LoadingSpinner/> :
-                            allEpisode.map((item, index) => {
-                                return <li key={item.id}>
-                                    <div className={''}>
-                                        {String(index + 1).padStart(2, "0")} - {item.episode} : <strong>{item.name}</strong>
-                                    </div>
-                                    <div className={'badge badge--secondary'}>{item.air_date}</div>
-                                </li>
-                            })
+                        allEpisode.map((item, index) => {
+                            return <li key={item.id}>
+                                <div className={''}>
+                                    {String(index + 1).padStart(2, "0")} - {item.episode} : <strong>{item.name}</strong>
+                                </div>
+                                <div className={'badge badge--secondary'}>{item.air_date}</div>
+                            </li>
+                        })
 
                     }
 

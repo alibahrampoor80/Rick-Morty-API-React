@@ -1,8 +1,8 @@
 import http from "./httpService.js";
 
 
-export function getCharacters() {
-    return http.get('/character').then((data) => data.data)
+export function getCharacters(id) {
+    return http.get(`/character?page=${id}`).then((data) => data.data)
 }
 
 export function getLocation() {

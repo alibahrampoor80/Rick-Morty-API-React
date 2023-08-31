@@ -1,33 +1,44 @@
 import './App.css'
-import Navbar from "./components/Navbar.jsx";
+import Navbar, {SearchResult} from "./components/Navbar.jsx";
 import CharacterList from "./components/CharacterList.jsx";
 import CharacterDetail from "./components/CharacterDetail.jsx";
 
 import {UseGetAllCharacters, UseGetAllEpisode} from "./hooks/useRickAndMorty.js";
 import LoadingSpinner from "./components/LoadingSpinner.jsx";
+import {useEffect, useState} from "react";
+import {allCharacters, episodes} from "./data/data.js";
 
 function App() {
-    const {data: dataAllCharacters, isLoading: isLoadingAllCharacters} = UseGetAllCharacters()
-    const {data: dataAllEpisode, isLoading: isLoadingAllEpisode} = UseGetAllEpisode()
+    // const {data: dataAllCharacters, isLoading: isLoadingAllCharacters} = UseGetAllCharacters()
+    // const {data: dataAllEpisode, isLoading: isLoadingAllEpisode} = UseGetAllEpisode()
+    //
+    // const allCharacters = dataAllCharacters || {}
+    // const allEpisode = dataAllEpisode || {}
 
-    const allCharacters = dataAllCharacters || {}
-    const allEpisode = dataAllEpisode || {}
+    const [Characters, setCharacters] = useState(allCharacters)
 
     return (
 
         <div className={'app'}>
 
-            <Navbar charactersLength={allCharacters?.results?.length}/>
+            <Navbar >
+                <SearchResult charactersLength={Characters.length}/>
+            </Navbar>
 
-            <div className="main">
+            <Main>
+                <CharacterList characters={Characters}/>
 
-                <CharacterList characters={allCharacters.results} isLoading={isLoadingAllCharacters}/>
-
-                <CharacterDetail allEpisode={allEpisode.results} isLoading={isLoadingAllEpisode}/>
-            </div>
+                <CharacterDetail allEpisode={episodes}/>
+            </Main>
         </div>
 
     )
 }
 
 export default App
+
+function Main({children}) {
+    return <div className={'main'}>
+        {children}
+    </div>
+}
