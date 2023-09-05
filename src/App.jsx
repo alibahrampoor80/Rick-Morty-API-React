@@ -15,13 +15,22 @@ function App() {
     // const allCharacters = dataAllCharacters || {}
     // const allEpisode = dataAllEpisode || {}
 
-    const [Characters, setCharacters] = useState(allCharacters)
+    const [Characters, setCharacters] = useState([])
+
+    useEffect(() => {
+        async function fetchData() {
+            const response = await fetch('https://rickandmortyapi.com/api/character')
+            const data =await response.json()
+            setCharacters(data.results.slice(0, 8))
+        }
+        fetchData()
+    }, [])
 
     return (
 
         <div className={'app'}>
 
-            <Navbar >
+            <Navbar>
                 <SearchResult charactersLength={Characters.length}/>
             </Navbar>
 
