@@ -5,7 +5,7 @@ const Navbar = ({children}) => {
     return <>
         <nav className={'navbar'}>
             <Logo/>
-            <Search/>
+
             <p className={'font-bold text-white text-lg'}>ali bahrampoor</p>
             {children}
             <Favourites/>
@@ -22,8 +22,9 @@ function Logo() {
     </div>
 }
 
-function Search() {
-    return <input type="text" className={'text-field'} placeholder={'search'}/>
+export function Search({query, setQuery}) {
+    return <input type="text" className={'text-field'} placeholder={'search'} value={query}
+                  onChange={event => setQuery(event.target.value)}/>
 }
 
 export function SearchResult({charactersLength}) {
