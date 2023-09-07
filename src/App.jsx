@@ -1,5 +1,5 @@
 import './App.css'
-import Navbar, {Search, SearchResult} from "./components/Navbar.jsx";
+import Navbar, {Favourites, Search, SearchResult} from "./components/Navbar.jsx";
 import CharacterList from "./components/CharacterList.jsx";
 import CharacterDetail from "./components/CharacterDetail.jsx";
 
@@ -20,8 +20,10 @@ function App() {
     const [Characters, setCharacters] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [query, setQuery] = useState("")
-    useEffect(() => {
+    const [selectId, setSelectId] = useState(null)
+    const [favourite, setFavourite] = useState([])
 
+    useEffect(() => {
         async function fetchData() {
             try {
                 setIsLoading(true)
@@ -38,6 +40,14 @@ function App() {
         fetchData()
     }, [query])
 
+    const onSelectCharacter = (id) => {
+        setSelectId(prevId => prevId === id ? null : id)
+    }
+    const addFavourite = (char) => {
+        // setFavourite([...favourite, char])
+        setFavourite((prevFavourite) => [...prevFavourite, char])
+    }
+    const isAddToFavourite = favourite.map(fav => fav.id).includes(selectId)
     return (
 
         <div className={'app'}>
@@ -45,13 +55,18 @@ function App() {
             <Navbar>
                 <Search query={query} setQuery={setQuery}/>
                 <SearchResult charactersLength={Characters.length}/>
+                <Favourites favouriteLength={favourite.length}/>
             </Navbar>
 
             <Main>
-                <CharacterList characters={Characters} isLoading={isLoading}/>
+                <CharacterList characters={Characters}
+                               isLoading={isLoading}
+                               onSelectCharacter={onSelectCharacter}
+                               selectId={selectId}/>
 
-
-                <CharacterDetail allEpisode={episodes}/>
+                <CharacterDetail selectId={selectId}
+                                 addFavourite={addFavourite}
+                                 isAddToFavourite={isAddToFavourite}/>
             </Main>
             <Toaster/>
         </div>

@@ -8,7 +8,6 @@ const Navbar = ({children}) => {
 
             <p className={'font-bold text-white text-lg'}>ali bahrampoor</p>
             {children}
-            <Favourites/>
         </nav>
     </>
 };
@@ -31,11 +30,11 @@ export function SearchResult({charactersLength}) {
     return <div className="navbar__result">found {charactersLength} character</div>
 }
 
-function Favourites() {
+export function Favourites({favouriteLength}) {
     return (
         <button className={'heart'}>
             <HeartIcon className={'icon'}/>
-            <span className={'badge'}>3</span>
+            <span className={'badge'}>{favouriteLength}</span>
         </button>
     )
 }
