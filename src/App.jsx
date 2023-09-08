@@ -61,14 +61,18 @@ function App() {
         setFavourite((prevFavourite) => [...prevFavourite, char])
     }
     const isAddToFavourite = favourite.map(fav => fav.id).includes(selectId)
-    return (
 
+    const handelDeleteFavourite = (id) => {
+        setFavourite(pervFav => pervFav.filter(f => f.id !== id))
+    }
+
+    return (
         <div className={'app'}>
-          
+
             <Navbar>
                 <Search query={query} setQuery={setQuery}/>
                 <SearchResult charactersLength={Characters.length}/>
-                <Favourites favouriteLength={favourite.length}/>
+                <Favourites favourite={favourite} handelDeleteFavourite={handelDeleteFavourite}/>
             </Navbar>
 
             <Main>
