@@ -9,6 +9,7 @@ import React, {useEffect, useState} from "react";
 import {allCharacters, episodes} from "./data/data.js";
 import {toast, Toaster} from "react-hot-toast";
 import axios from "axios";
+import Modal from "./components/Modal.jsx";
 
 function App() {
     // const {data: dataAllCharacters, isLoading: isLoadingAllCharacters} = UseGetAllCharacters()
@@ -27,6 +28,7 @@ function App() {
     useEffect(() => {
         const controller = new AbortController()
         const signal = controller.signal
+
         async function fetchData() {
             try {
                 setIsLoading(true)
@@ -62,6 +64,7 @@ function App() {
     return (
 
         <div className={'app'}>
+          
             <Navbar>
                 <Search query={query} setQuery={setQuery}/>
                 <SearchResult charactersLength={Characters.length}/>
