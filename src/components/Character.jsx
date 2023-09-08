@@ -7,14 +7,14 @@ import CharacterInfo from "./CharacterInfo.jsx";
 const Character = ({item, onSelectCharacter, selectId}) => {
 
     return (
-        <div className={'list__item'}>
+        <div className={'list__item'} onClick={() => onSelectCharacter(item.id)}>
             <img src={item.image} alt={item.name}/>
 
             <CharacterName item={item}/>
 
             <CharacterInfo item={item}/>
 
-            <button className={'icon red'} onClick={() => onSelectCharacter(item.id)}>
+            <button className={'icon red'} >
                 {
                     selectId === item.id ? <EyeSlashIcon className={'icon'}/> : <EyeIcon className={'icon'}/>
                 }

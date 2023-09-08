@@ -16,28 +16,39 @@ function App() {
     //
     // const allCharacters = dataAllCharacters || {}
     // const allEpisode = dataAllEpisode || {}
-
+    const resentTime = 90
     const [Characters, setCharacters] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [query, setQuery] = useState("")
     const [selectId, setSelectId] = useState(null)
     const [favourite, setFavourite] = useState([])
 
+
     useEffect(() => {
+        const controller = new AbortController()
+        const signal = controller.signal
         async function fetchData() {
             try {
                 setIsLoading(true)
-                const {data} = await axios.get(`https://rickandmortyapi.com/api/character?name=${query}`)
+                const {data} = await axios.get(`https://rickandmortyapi.com/api/character?name=${query}`,
+                    {signal})
                 setCharacters(data.results)
                 setIsLoading(false)
             } catch (err) {
-                setCharacters([])
-                setIsLoading(false)
-                toast.error(err.message)
+                if (!axios.isCancel()) {
+                    setCharacters([])
+                    setIsLoading(false)
+                    toast.error(err.response.data.error)
+                }
             }
         }
 
         fetchData()
+        return () => {
+            controller.abort()
+        }
+
+
     }, [query])
 
     const onSelectCharacter = (id) => {
@@ -51,7 +62,6 @@ function App() {
     return (
 
         <div className={'app'}>
-
             <Navbar>
                 <Search query={query} setQuery={setQuery}/>
                 <SearchResult charactersLength={Characters.length}/>
