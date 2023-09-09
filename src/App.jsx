@@ -22,8 +22,13 @@ function App() {
     const [isLoading, setIsLoading] = useState(false)
     const [query, setQuery] = useState("")
     const [selectId, setSelectId] = useState(null)
-    const [favourite, setFavourite] = useState([])
+    const [favourite, setFavourite] = useState(() => {
+        return JSON.parse(localStorage.getItem('favourite') )|| []
+    })
 
+    useEffect(() => {
+        localStorage.setItem('favourite', JSON.stringify(favourite))
+    }, [favourite])
 
     useEffect(() => {
         const controller = new AbortController()
