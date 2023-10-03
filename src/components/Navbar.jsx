@@ -37,7 +37,7 @@ export function SearchResult({charactersLength}) {
 
 export function Favourites({favourite, handelDeleteFavourite}) {
     const [isOpen, setIsOpen] = useState(false)
-    console.log(favourite)
+    // console.log(favourite)
     return (
         <>
             <Modal open={isOpen} onOpen={setIsOpen} title={'list of favourite'}>
